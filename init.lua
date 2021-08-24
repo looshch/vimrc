@@ -105,15 +105,8 @@ function tabline()
     local file = fn.bufname(buflist[winnr])
     -- highlight tab names
     s = i == fn.tabpagenr() and s .. '%#TabLineSel#' or s .. '%#TabLine#'
-    -- tab number
-    s = s .. ' ' .. i .. ' '
-    -- tab name is file name
-    s = s .. fn.fnamemodify(file, ':t')
-    -- modification indicator
-    if i == fn.tabpagenr() then
-      s = s .. ' %m'
-    end
-    s = s .. ' '
+    -- display tab number and file name as tab name
+    s = s .. ' ' .. i .. ' ' .. fn.fnamemodify(file, ':t') .. ' '
   end
   s = s .. '%#TabLineFill#'
   return s
