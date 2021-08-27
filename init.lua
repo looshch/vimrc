@@ -28,7 +28,7 @@ require'packer'.startup(function()
   -- LSP configurator
   use 'neovim/nvim-lspconfig'
   -- auto completion
-  use 'hrsh7th/nvim-compe'
+  use 'nvim-lua/completion-nvim'
   -- auto pairs
   use {
     'windwp/nvim-autopairs',
@@ -188,19 +188,12 @@ map('n', '<leader>f', ':lua vim.lsp.buf.formatting()<cr>', { silent = true })
 map('n', '<leader>a', ':lua vim.lsp.buf.code_action()<cr>', { silent = true })
 -- [r]ename symbol
 map('n', '<leader>R', ':lua vim.lsp.buf.rename()<cr>', { silent = true })
-require'lspconfig'.gopls.setup{}
+-- nvim-lspconfig & completion-nvim
+require'lspconfig'.gopls.setup{on_attach=require'completion'.on_attach}
 
--- nvim-compe
-set.completeopt = 'menuone,noselect'
--- auto select first entry
-require'compe'.setup{
-  source = {
-    path = true;
-    buffer = true;
-    nvim_lsp = true;
-  },
-}
-map('i', '<CR>', 'compe#confirm(luaeval("require \'nvim-autopairs\'.autopairs_cr()"))', { expr = true })
+-- completion-nvim
+set.completeopt = 'menuone,noinsert,noselect'
+vim.g.completion_enable_auto_hover = 0
 
 -- vim-commentary. Toggle line [c]ommenting
 map('n', '<leader>c', 'gc', {})
